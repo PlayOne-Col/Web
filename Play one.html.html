@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PLAY ONE - Excelencia en Logística Deportiva</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'play-red': '#DC2626',
+                        'play-dark': '#111111',
+                        'play-gray': '#1f1f1f'
+                    },
+                    fontFamily: {
+                        'rajdhani': ['Arial Black', 'Helvetica', 'sans-serif'],
+                        'inter': ['Arial', 'Helvetica', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .hero-bg {
+            background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('YlSFZrDLOn8GU_O9elkY7');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+        }
+        
+        /* Optimización responsive para la imagen de fondo */
+        @media (max-width: 768px) {
+            .hero-bg {
+                background-attachment: scroll;
+                background-size: cover;
+                background-position: center center;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero-bg {
+                background-size: cover;
+                background-position: center top;
+            }
+        }
+        
+        .smooth-scroll {
+            scroll-behavior: smooth;
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .slide-in-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .slide-in-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .scale-in {
+            opacity: 0;
+            transform: scale(0.8);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .scale-in.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        .bounce-in {
+            opacity: 0;
+            transform: translateY(-30px) scale(0.9);
+            transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        
+        .bounce-in.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        
+        .rotate-in {
+            opacity: 0;
+            transform: rotate(-5deg) scale(0.9);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .rotate-in.visible {
+            opacity: 1;
+            transform: rotate(0deg) scale(1);
+        }
+        
+        /* Animación del logo */
+        .logo-bounce {
+            animation: logoBounce 2s ease-in-out infinite;
+        }
+        
+        @keyframes logoBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        /* Animación de pulso para botones */
+        .pulse-button {
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        /* Animación de gradiente para títulos */
+        .gradient-text {
+            background: linear-gradient(45deg, #DC2626, #EF4444, #F87171, #DC2626);
+            background-size: 300% 300%;
+            animation: gradientShift 4s ease infinite;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            25% { background-position: 100% 50%; }
+            50% { background-position: 100% 100%; }
+            75% { background-position: 0% 100%; }
+        }
+
+        /* Animación de iconos de servicios */
+        .service-icon {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .service-card:hover .service-icon {
+            transform: scale(1.1) rotate(10deg);
+            background: linear-gradient(135deg, #DC2626, #EF4444);
+            box-shadow: 0 8px 25px rgba(220, 38, 38, 0.4);
+        }
+
+        /* Animación de aparición escalonada */
+        .stagger-animation {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .stagger-animation.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Efecto de ondas en botones */
+        .wave-button {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .wave-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: width 0.6s, height 0.6s;
+            transform: translate(-50%, -50%);
+        }
+        
+        .wave-button:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        /* Animación de contador */
+        @keyframes countUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .counter-animation {
+            animation: countUp 0.8s ease-out forwards;
+        }
+
+        /* Efecto de brillo en elementos */
+        .shine-effect {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .shine-effect::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, transparent, rgba(220, 38, 38, 0.3), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.8s;
+        }
+        
+        .shine-effect:hover::after {
+            transform: translateX(100%);
+        }
+
+        /* Animación de deslizamiento para partners */
+        .partner-slide {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .partner-slide:hover {
+            transform: scale(1.1) rotate(2deg);
+            box-shadow: 0 10px 30px rgba(220, 38, 38, 0.3);
+        }
+
+        /* Efecto de respiración para logos */
+        .breathe {
+            animation: breathe 3s ease-in-out infinite;
+        }
+        
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Animación de texto deslizante */
+        .slide-text {
+            overflow: hidden;
+        }
+        
+        .slide-text span {
+            display: inline-block;
+            transform: translateY(100%);
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .slide-text.visible span {
+            transform: translateY(0);
+        }
+        
+        .nav-sticky {
+            backdrop-filter: blur(10px);
+            background: rgba(17, 17, 17, 0.95);
+        }
+        
+        .service-card {
+            background: linear-gradient(135deg, rgba(220, 38, 38, 0.1) 0%, rgba(31, 31, 31, 0.8) 100%);
+            border: 1px solid rgba(220, 38, 38, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(220, 38, 38, 0.5);
+            box-shadow: 0 10px 30px rgba(220, 38, 38, 0.2);
+        }
+        
+        .team-member {
+            background: linear-gradient(135deg, rgba(31, 31, 31, 0.9) 0%, rgba(220, 38, 38, 0.1) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .team-member:hover {
+            transform: translateY(-10px);
+            border-color: rgba(220, 38, 38, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-play-dark text-white font-inter smooth-scroll">
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 transition-all duration-300" id="navbar">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <img src="NfcnumFxO_CPwzLuCKkie" alt="PLAY ONE Logo" class="h-10 w-auto">
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="hover:text-play-red transition-colors duration-300">Inicio</a>
+                    <a href="#about" class="hover:text-play-red transition-colors duration-300">Nosotros</a>
+                    <a href="#services" class="hover:text-play-red transition-colors duration-300">Servicios</a>
+                    <a href="#team" class="hover:text-play-red transition-colors duration-300">Equipo</a>
+                    <a href="#contact" class="hover:text-play-red transition-colors duration-300">Contacto</a>
+                </div>
+                <button class="md:hidden text-white" onclick="toggleMenu()">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-bg min-h-screen flex items-center justify-center text-center">
+        <div class="container mx-auto px-6">
+            <div class="fade-in">
+                <div class="mb-6 flex justify-center">
+                    <img src="NfcnumFxO_CPwzLuCKkie" alt="PLAY ONE" class="h-24 md:h-40 w-auto logo-bounce breathe">
+                </div>
+                <p class="text-2xl md:text-4xl font-rajdhani font-light mb-8 text-gray-200">
+                    Movemos tu pasión
+                </p>
+                <p class="text-lg md:text-xl mb-12 max-w-2xl mx-auto text-gray-300">
+                    Transformando la logística deportiva a través de la innovación, eficiencia y excelencia en cada evento
+                </p>
+                <a href="#services" class="inline-block bg-play-red hover:bg-red-700 px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg pulse-button wave-button shine-effect">
+                    Descubre nuestros servicios
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-play-gray">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto text-center fade-in">
+                <h2 class="text-4xl font-rajdhani font-bold mb-8 scale-in">
+                    Acerca de <span class="gradient-text">PLAY ONE</span>
+                </h2>
+                <p class="text-xl mb-12 text-gray-300 leading-relaxed">
+                    PLAY ONE es una empresa especializada en logística deportiva, ofreciendo planificación, gestión y ejecución integral de eventos deportivos en todas las disciplinas. Desde competencias amateur hasta torneos de alto rendimiento, transformamos la logística deportiva a través de un enfoque innovador y eficiente, garantizando calidad y profesionalismo en cada proyecto.
+                </p>
+                
+                <div class="grid md:grid-cols-2 gap-12 mt-16">
+                    <div class="slide-in-left">
+                        <h3 class="text-2xl font-rajdhani font-bold mb-4 text-play-red bounce-in">Nuestra Misión</h3>
+                        <p class="text-gray-300 leading-relaxed">
+                            En PLAY ONE, transformamos la logística deportiva en una experiencia sin complicaciones, ofreciendo soluciones estratégicas, operativas y humanas que garantizan el éxito de eventos deportivos de cualquier disciplina. Nos comprometemos con la calidad, la eficiencia y el acompañamiento integral antes, durante y después de cada competencia, brindando confianza a organizadores, atletas y espectadores en el departamento del Quindío y más allá.
+                        </p>
+                    </div>
+                    
+                    <div class="slide-in-right">
+                        <h3 class="text-2xl font-rajdhani font-bold mb-4 text-play-red bounce-in">Nuestra Visión</h3>
+                        <p class="text-gray-300 leading-relaxed">
+                            Ser reconocidos en el 2030 como la empresa líder en logística deportiva en el Eje Cafetero, consolidando una red de apoyo técnico y humano que impulse el crecimiento del deporte en todas sus disciplinas y niveles, desde la formación hasta el alto rendimiento.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl font-rajdhani font-bold mb-8 bounce-in">
+                    Nuestros <span class="gradient-text">Servicios</span>
+                </h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    Ofrecemos soluciones logísticas integrales adaptadas a las necesidades de tu evento deportivo, desde la planificación inicial hasta la ejecución impecable.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="service-card p-8 rounded-xl scale-in" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="w-16 h-16 bg-play-red rounded-lg flex items-center justify-center mb-6 mx-auto rotate-in service-icon">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-rajdhani font-bold mb-4 text-center bounce-in">Planificación de Eventos</h3>
+                    <p class="text-gray-300 text-center leading-relaxed fade-in">
+                        Servicios de planificación integral que cubren cada aspecto de su evento deportivo, desde el concepto inicial hasta las estrategias detalladas de ejecución.
+                    </p>
+                </div>
+                
+                <div class="service-card p-8 rounded-xl scale-in" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="w-16 h-16 bg-play-red rounded-lg flex items-center justify-center mb-6 mx-auto rotate-in service-icon">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-rajdhani font-bold mb-4 text-center bounce-in">Gestión de Eventos</h3>
+                    <p class="text-gray-300 text-center leading-relaxed fade-in">
+                        Servicios de gestión profesional que aseguran la coordinación fluida de todos los elementos del evento, equipos y partes interesadas durante todo el proceso.
+                    </p>
+                </div>
+                
+                <div class="service-card p-8 rounded-xl scale-in" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="w-16 h-16 bg-play-red rounded-lg flex items-center justify-center mb-6 mx-auto rotate-in service-icon">
+                        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-rajdhani font-bold mb-4 text-center bounce-in">Ejecución de Eventos</h3>
+                    <p class="text-gray-300 text-center leading-relaxed fade-in">
+                        Ejecución impecable de eventos deportivos con coordinación en tiempo real, resolución de problemas y aseguramiento de calidad para entregar resultados excepcionales.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Value Proposition Section -->
+    <section class="py-20 bg-play-gray">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto text-center fade-in">
+                <h2 class="text-4xl font-rajdhani font-bold mb-8 bounce-in">
+                    Tu Socio <span class="gradient-text">Estratégico</span>
+                </h2>
+                <p class="text-2xl font-rajdhani font-light mb-8 text-play-red">
+                    "Más que un servicio, somos el socio que hace que cada evento deportivo funcione con excelencia."
+                </p>
+                <p class="text-xl text-gray-300 leading-relaxed">
+                    No solo brindamos servicios logísticos, nos convertimos en tu socio estratégico, comprometidos con tu éxito. Nuestro compromiso va más allá de la ejecución; aseguramos la excelencia en cada detalle, haciendo realidad tu visión mientras te enfocas en lo que más importa: el deporte y los atletas.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="py-20">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl font-rajdhani font-bold mb-8 bounce-in">
+                    Nuestro <span class="gradient-text">Equipo</span>
+                </h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto mb-12">
+                    En Play One Logistics contamos con profesionales especializados en logística y deporte, preparados para responder a las exigencias de cada evento. Combinamos conocimiento, compromiso y capacidad de adaptación para ofrecer soluciones eficientes, precisas y a la medida. Trabajamos como un solo equipo, asegurando que todo funcione con excelencia desde el montaje hasta la clausura.
+                </p>
+                
+                <!-- Team Photo -->
+                <div class="scale-in mb-16">
+                    <img src="Iedo8VaPfb00ymc_vRZIM" alt="Equipo PLAY ONE" class="w-full max-w-4xl mx-auto rounded-xl shadow-2xl border border-gray-700">
+                </div>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="team-member p-8 rounded-xl text-center fade-in">
+                    <div class="w-24 h-24 bg-gradient-to-br from-play-red to-red-700 rounded-full mx-auto mb-6 flex items-center justify-center">
+                        <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-rajdhani font-bold mb-2">Equipo Directivo</h3>
+                    <p class="text-play-red mb-4">Visión Estratégica</p>
+                    <p class="text-gray-300 text-sm leading-relaxed">
+                        Líderes experimentados con profundo conocimiento de la dinámica de la industria deportiva y los desafíos logísticos.
+                    </p>
+                </div>
+                
+                <div class="team-member p-8 rounded-xl text-center fade-in">
+                    <div class="w-24 h-24 bg-gradient-to-br from-play-red to-red-700 rounded-full mx-auto mb-6 flex items-center justify-center">
+                        <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-rajdhani font-bold mb-2">Especialistas en Operaciones</h3>
+                    <p class="text-play-red mb-4">Excelencia en Ejecución</p>
+                    <p class="text-gray-300 text-sm leading-relaxed">
+                        Profesionales altamente adaptables que aseguran la ejecución perfecta de eventos en múltiples disciplinas deportivas.
+                    </p>
+                </div>
+                
+                <div class="team-member p-8 rounded-xl text-center fade-in">
+                    <div class="w-24 h-24 bg-gradient-to-br from-play-red to-red-700 rounded-full mx-auto mb-6 flex items-center justify-center">
+                        <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-rajdhani font-bold mb-2">Red de Apoyo</h3>
+                    <p class="text-play-red mb-4">Soporte Integral</p>
+                    <p class="text-gray-300 text-sm leading-relaxed">
+                        Especialistas de apoyo comprometidos que brindan asistencia continua y soluciones innovadoras para cada desafío.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners Section -->
+    <section class="py-20 bg-play-gray">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl font-rajdhani font-bold mb-8">
+                    Nuestros <span class="text-play-red">Socios</span>
+                </h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    En Play One Logistics construimos relaciones estratégicas con organizaciones del sector deportivo que creen en nuestro propósito. Algunas nos respaldan, otras nos proyectan, y muchas suman valor desde distintas áreas. Cada alianza fortalece nuestra capacidad de ofrecer un servicio integral, conectado con la realidad del deporte regional.
+                </p>
+            </div>
+            
+            <!-- Partners Carousel -->
+            <div class="relative overflow-hidden fade-in">
+                <div class="partners-carousel flex transition-transform duration-500 ease-in-out" id="partnersCarousel">
+                    <div class="flex-shrink-0 w-full flex justify-center">
+                        <div class="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden bg-white shadow-lg partner-slide">
+                            <img src="8k1lMmV-_mKFfNRC4AnLQ" alt="Media Maratón Quindío" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                    
+                    <div class="flex-shrink-0 w-full flex justify-center">
+                        <div class="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden bg-white shadow-lg">
+                            <img src="WkmcqM-FAQZYfpDudWFN_" alt="World Tour Cycling Store" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                    
+                    <div class="flex-shrink-0 w-full flex justify-center">
+                        <div class="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden bg-white shadow-lg">
+                            <img src="zaeRib-l_UsmbgXdHwpRV" alt="CIMA" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                    
+                    <div class="flex-shrink-0 w-full flex justify-center">
+                        <div class="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden bg-white shadow-lg">
+                            <img src="-uZQio5vNdmVNPvrxY4Ne" alt="Logistics & Sports" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                    
+                    <div class="flex-shrink-0 w-full flex justify-center">
+                        <div class="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden bg-white shadow-lg">
+                            <img src="cx-6QtbHKGg3C4nrQwvO1" alt="Synaptical Sport" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                    
+                    <div class="flex-shrink-0 w-full flex justify-center">
+                        <div class="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden bg-white shadow-lg">
+                            <img src="xdzt0IRsFI3j4OdWj1H8t" alt="Bici" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Carousel indicators -->
+                <div class="flex justify-center mt-8 space-x-2">
+                    <button class="carousel-dot w-3 h-3 rounded-full bg-gray-600 hover:bg-red-600 transition-colors duration-300" data-slide="0"></button>
+                    <button class="carousel-dot w-3 h-3 rounded-full bg-gray-600 hover:bg-red-600 transition-colors duration-300" data-slide="1"></button>
+                    <button class="carousel-dot w-3 h-3 rounded-full bg-gray-600 hover:bg-red-600 transition-colors duration-300" data-slide="2"></button>
+                    <button class="carousel-dot w-3 h-3 rounded-full bg-gray-600 hover:bg-red-600 transition-colors duration-300" data-slide="3"></button>
+                    <button class="carousel-dot w-3 h-3 rounded-full bg-gray-600 hover:bg-red-600 transition-colors duration-300" data-slide="4"></button>
+                    <button class="carousel-dot w-3 h-3 rounded-full bg-gray-600 hover:bg-red-600 transition-colors duration-300" data-slide="5"></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-16 fade-in">
+                    <h2 class="text-4xl font-rajdhani font-bold mb-8">
+                        Ponte en <span class="text-play-red">Contacto</span>
+                    </h2>
+                    <p class="text-xl text-gray-300">
+                        Tu evento merece una logística impecable. En Play One Logistics estamos listos para hacerlo posible. Escríbenos y llevemos el deporte al nivel que se merece.
+                    </p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-12">
+                    <div class="fade-in">
+                        <form class="space-y-6">
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Nombre</label>
+                                <input type="text" class="w-full px-4 py-3 bg-play-dark border border-gray-600 rounded-lg focus:border-play-red focus:outline-none transition-colors">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Correo Electrónico</label>
+                                <input type="email" class="w-full px-4 py-3 bg-play-dark border border-gray-600 rounded-lg focus:border-play-red focus:outline-none transition-colors">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Tipo de Evento / Disciplina Deportiva</label>
+                                <select class="w-full px-4 py-3 bg-play-dark border border-gray-600 rounded-lg focus:border-play-red focus:outline-none transition-colors">
+                                    <option>Selecciona el tipo de evento o disciplina</option>
+                                    <optgroup label="Disciplinas Deportivas">
+                                        <option>Patinaje</option>
+                                        <option>Fútbol</option>
+                                        <option>Voleibol</option>
+                                        <option>Ciclismo</option>
+                                        <option>Squash</option>
+                                        <option>Atletismo</option>
+                                        <option>Natación</option>
+                                        <option>Baloncesto</option>
+                                        <option>Tenis</option>
+                                        <option>Gimnasia</option>
+                                        <option>Artes Marciales</option>
+                                        <option>Deportes de Combate</option>
+                                        <option>Deportes Acuáticos</option>
+                                        <option>Deportes Extremos</option>
+                                    </optgroup>
+                                    <optgroup label="Tipos de Evento">
+                                        <option>Competencia Amateur</option>
+                                        <option>Torneo Profesional</option>
+                                        <option>Evento Deportivo Corporativo</option>
+                                        <option>Campeonato Juvenil</option>
+                                        <option>Maratón / Media Maratón</option>
+                                        <option>Triatlón</option>
+                                        <option>Evento Multideportivo</option>
+                                        <option>Otro</option>
+                                    </optgroup>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Mensaje</label>
+                                <textarea rows="4" class="w-full px-4 py-3 bg-play-dark border border-gray-600 rounded-lg focus:border-play-red focus:outline-none transition-colors"></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-play-red hover:bg-red-700 px-6 py-3 rounded-lg font-semibold transition-colors mb-4">
+                                Enviar Mensaje
+                            </button>
+                            <a href="https://wa.me/573113219083?text=Hola%20PLAY%20ONE,%20me%20interesa%20conocer%20m%C3%A1s%20sobre%20sus%20servicios%20de%20log%C3%ADstica%20deportiva" target="_blank" class="w-full bg-green-600 hover:bg-green-700 px-6 py-3 rounded-lg font-semibold transition-colors flex items-center justify-center">
+                                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
+                                </svg>
+                                Contactar por WhatsApp
+                            </a>
+                        </form>
+                    </div>
+                    
+                    <div class="fade-in">
+                        <div class="space-y-8">
+                            <div>
+                                <h3 class="text-xl font-rajdhani font-bold mb-4 text-play-red">Información de Contacto</h3>
+                                <div class="space-y-4">
+                                    <div class="flex items-center">
+                                        <svg class="w-5 h-5 text-play-red mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                        </svg>
+                                        <span>playonelogistics@gmail.com</span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <svg class="w-5 h-5 text-play-red mr-3" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
+                                        </svg>
+                                        <a href="https://wa.me/573113219083?text=Hola%20PLAY%20ONE,%20me%20interesa%20conocer%20m%C3%A1s%20sobre%20sus%20servicios%20de%20log%C3%ADstica%20deportiva" target="_blank" class="hover:text-play-red transition-colors">+57 311 321 9083</a>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <svg class="w-5 h-5 text-play-red mr-3" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>
+                                        </svg>
+                                        <span>@_PLAY_ONE</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h3 class="text-xl font-rajdhani font-bold mb-4 text-play-red">Áreas de Servicio</h3>
+                                <p class="text-gray-300 leading-relaxed">
+                                    En Play One Logistics brindamos soluciones logísticas para eventos deportivos en el Quindío y sus alrededores. Nuestra experiencia abarca disciplinas como atletismo, ciclismo, fútbol, natación, gimnasia, patinaje y otros deportes de conjunto, siempre con la capacidad de adaptarnos a cualquier necesidad deportiva. Donde haya deporte, allí estaremos para hacerlo posible.
+                                </p>
+                            </div>
+                            
+                            <div>
+                                <h3 class="text-xl font-rajdhani font-bold mb-4 text-play-red">Síguenos</h3>
+                                <div class="flex space-x-4">
+                                    <a href="https://instagram.com/_PLAY_ONE" target="_blank" class="w-10 h-10 bg-play-red rounded-lg flex items-center justify-center hover:bg-red-700 transition-colors">
+                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                                        </svg>
+                                    </a>
+                                    <a href="https://www.tiktok.com/@_playonelogistics?_t=ZS-8xA0BQm36yA&_r=1" target="_blank" class="w-10 h-10 bg-play-red rounded-lg flex items-center justify-center hover:bg-red-700 transition-colors">
+                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 bg-play-dark border-t border-gray-800">
+        <div class="container mx-auto px-6">
+            <div class="text-center">
+                <div class="flex justify-center mb-4">
+                    <img src="NfcnumFxO_CPwzLuCKkie" alt="PLAY ONE" class="h-10 w-auto">
+                </div>
+                <p class="text-gray-400 mb-6">Movemos tu pasión</p>
+                <p class="text-gray-500 text-sm">
+                    © 2025 PLAY ONE. Todos los derechos reservados. | Excelencia en Logística Deportiva
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Consolidate all DOM-dependent code into a single event listener
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // Enhanced animation on scroll with staggered effects
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        // Add staggered delay for multiple elements
+                        setTimeout(() => {
+                            entry.target.classList.add('visible');
+                        }, index * 100);
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all animation elements
+            document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right, .scale-in, .bounce-in, .rotate-in').forEach(el => {
+                observer.observe(el);
+            });
+
+            // Add floating animation to service cards on hover
+            document.querySelectorAll('.service-card').forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-10px) rotateX(5deg)';
+                    this.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) rotateX(0)';
+                });
+            });
+
+            // Add parallax effect to hero section
+            window.addEventListener('scroll', function() {
+                const scrolled = window.pageYOffset;
+                const heroSection = document.querySelector('.hero-bg');
+                if (heroSection) {
+                    heroSection.style.transform = `translateY(${scrolled * 0.3}px)`;
+                }
+            });
+
+            // Add typewriter effect to hero subtitle
+            const heroSubtitle = document.querySelector('.hero-bg p');
+            if (heroSubtitle) {
+                const text = heroSubtitle.textContent;
+                heroSubtitle.textContent = '';
+                let i = 0;
+                
+                setTimeout(() => {
+                    const typeWriter = setInterval(() => {
+                        if (i < text.length) {
+                            heroSubtitle.textContent += text.charAt(i);
+                            i++;
+                        } else {
+                            clearInterval(typeWriter);
+                        }
+                    }, 80);
+                }, 1000);
+            }
+
+            // Form submission
+            const form = document.querySelector('form');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    alert('¡Gracias por tu mensaje! Te contactaremos pronto.');
+                    this.reset();
+                });
+            }
+
+            // Partners Carousel with enhanced animations
+            let currentSlide = 0;
+            const totalSlides = 6;
+            const carousel = document.getElementById('partnersCarousel');
+            const dots = document.querySelectorAll('.carousel-dot');
+
+            // Add staggered animation to team members
+            document.querySelectorAll('.team-member').forEach((member, index) => {
+                member.style.animationDelay = `${index * 200}ms`;
+                member.classList.add('stagger-animation');
+            });
+
+            // Add counter animation effect
+            function animateCounters() {
+                const counters = document.querySelectorAll('.counter');
+                counters.forEach(counter => {
+                    const target = parseInt(counter.dataset.target);
+                    const increment = target / 100;
+                    let current = 0;
+                    
+                    const updateCounter = () => {
+                        if (current < target) {
+                            current += increment;
+                            counter.textContent = Math.ceil(current);
+                            requestAnimationFrame(updateCounter);
+                        } else {
+                            counter.textContent = target;
+                        }
+                    };
+                    
+                    updateCounter();
+                });
+            }
+
+            // Add text reveal animation
+            function revealText() {
+                document.querySelectorAll('.slide-text').forEach(element => {
+                    const text = element.textContent;
+                    element.innerHTML = text.split('').map(char => 
+                        `<span style="transition-delay: ${Math.random() * 0.5}s">${char}</span>`
+                    ).join('');
+                });
+            }
+
+            // Initialize text animations
+            revealText();
+
+            function updateCarousel() {
+                if (carousel && dots.length > 0) {
+                    const translateX = -currentSlide * 100;
+                    carousel.style.transform = `translateX(${translateX}%)`;
+                    
+                    // Update dots
+                    dots.forEach((dot, index) => {
+                        if (index === currentSlide) {
+                            dot.classList.remove('bg-gray-600');
+                            dot.classList.add('bg-red-600');
+                        } else {
+                            dot.classList.remove('bg-red-600');
+                            dot.classList.add('bg-gray-600');
+                        }
+                    });
+                }
+            }
+
+            function nextSlide() {
+                currentSlide = (currentSlide + 1) % totalSlides;
+                updateCarousel();
+            }
+
+            // Initialize carousel if elements exist
+            if (carousel && dots.length > 0) {
+                updateCarousel();
+                
+                // Auto advance carousel every 3 seconds
+                setInterval(nextSlide, 3000);
+
+                // Manual dot navigation
+                dots.forEach((dot, index) => {
+                    dot.addEventListener('click', () => {
+                        currentSlide = index;
+                        updateCarousel();
+                    });
+                });
+            }
+        });
+
+        // Navbar background on scroll
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (navbar) {
+                if (window.scrollY > 100) {
+                    navbar.classList.add('nav-sticky');
+                } else {
+                    navbar.classList.remove('nav-sticky');
+                }
+            }
+        });
+
+        // Mobile menu toggle
+        function toggleMenu() {
+            console.log('Mobile menu toggle');
+        }
+
+        // Initialize hero animation on window load
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                const heroFadeIn = document.querySelector('.hero-bg .fade-in');
+                if (heroFadeIn) {
+                    heroFadeIn.classList.add('visible');
+                }
+            }, 100);
+        });
+    </script>
+</body>
+</html>
